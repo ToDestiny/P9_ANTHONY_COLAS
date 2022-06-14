@@ -22,6 +22,7 @@ const row = (bill) => {
 const rows = (data) => {
   return data && data.length
     ? data
+        // FIX BUG BILL - Reorder list
         .sort((a, b) => {
           return new Date(b.date) - new Date(a.date);
         })
