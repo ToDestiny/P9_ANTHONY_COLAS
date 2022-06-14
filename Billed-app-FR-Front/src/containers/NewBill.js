@@ -24,6 +24,7 @@ export default class NewBill {
       .files[0];
     const filePath = e.target.value.split(/\\/g);
     const fileName = filePath[filePath.length - 1];
+    // FIX BUG NEWBILL - Handle extension (png, jpg and jpeg only)
     const ext = f.slice(((f.lastIndexOf('.') - 1) >>> 0) + 2).toLowerCase();
     const acceptedFormat = ['jpg', 'png', 'jpeg'];
     if (!acceptedFormat.includes(ext)) {
