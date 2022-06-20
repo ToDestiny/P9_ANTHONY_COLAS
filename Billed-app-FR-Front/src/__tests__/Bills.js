@@ -68,4 +68,30 @@ describe('Given I am connected as an employee', () => {
       expect(screen.queryByText('Envoyer une note de frais')).toBeTruthy();
     });
   });
+
+  describe('When I click on the eye icon', () => {
+    it('should render a modal', () => {
+      const onNavigate = (pathname) => {
+        document.body.innerHTML = ROUTES({ pathname });
+      };
+      document.body.innerHTML = BillsUI({ data: bills });
+      const billsModal = new Bills({
+        document,
+        onNavigate,
+        localStorage: window.localStorage,
+      });
+      const handleClickIconEye = jest.fn((icon) =>
+        billsModal.handleClickIconEye(icon)
+      );
+      const modaleFile = document.getElementById('modaleFile');
+      const iconEye = screen.getAllByTestId('icon-eye');
+      $.fn.modal = jest.fn(() => modaleFile.classList.add('show'));
+      iconEye.forEach((icon) => {
+        icon.addEventListener('click', handleClickIconEye(icon));
+        userEvent.click(icon);
+        expect(handleClickIconEye).toHaveBeenCalled();
+      });
+      expect(modaleFile).toHaveClass('show');
+    });
+  });
 });
