@@ -160,6 +160,7 @@ export default class {
     }
 
     bills.forEach((bill) => {
+      // FIX BUG DASHBOARD - Open tickets from everylist
       $(`#status-bills-container${this.index} > #open-bill${bill.id}`).click(
         (e) => this.handleEditTicket(e, bill, bills)
       );
