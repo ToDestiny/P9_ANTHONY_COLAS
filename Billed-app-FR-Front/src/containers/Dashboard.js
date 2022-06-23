@@ -105,7 +105,6 @@ export default class {
       $('.dashboard-right-container div').html(DashboardFormUI(bill));
       $('.vertical-navbar').css({ height: '150vh' });
       this.counter++;
-      console.log('Edit 1 = ' + (this.counter % 2));
     } else {
       $(`#open-bill${bill.id}`).css({ background: '#0D5AE5' });
 
@@ -114,7 +113,6 @@ export default class {
       `);
       $('.vertical-navbar').css({ height: '120vh' });
       this.counter++;
-      console.log('Edit 2 = ' + (this.counter % 2));
     }
     $('#icon-eye-d').click(this.handleClickIconEye);
     $('#btn-accept-bill').click((e) => this.handleAcceptSubmit(e, bill));
@@ -151,12 +149,10 @@ export default class {
         cards(filteredBills(bills, getStatus(this.index)))
       );
       this.counterShow++;
-      console.log('Handle 1 = ' + this.counterShow);
     } else {
       $(`#arrow-icon${this.index}`).css({ transform: 'rotate(90deg)' });
       $(`#status-bills-container${this.index}`).html('');
       this.counterShow++;
-      console.log('Handle 2 = ' + this.counterShow);
     }
 
     bills.forEach((bill) => {

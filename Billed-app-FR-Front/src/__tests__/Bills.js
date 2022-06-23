@@ -95,3 +95,71 @@ describe('Given I am connected as an employee', () => {
     });
   });
 });
+
+describe('Given when I am a user connected as an Admin', () => {
+  describe('When i navigate to Bills', () => {
+    it('should fetch bills from the mock API GET', async () => {
+      const onNavigate = (pathname) => {
+        document.body.innerHTML = ROUTES({ pathname });
+      };
+      localStorage.setItem(
+        'user',
+        JSON.stringify({ type: 'Admin', email: 'a@a' })
+      );
+      new Bills({
+        document,
+        onNavigate,
+        mockStore,
+        localStorage: window.localStorage,
+      });
+      document.body.innerHTML = BillsUI({ data: bills });
+      await waitFor(() => screen.getByText('Mes notes de frais'));
+      expect(screen.getByText('Mes notes de frais')).toBeTruthy();
+    });
+  });
+
+  describe('When an error occurs on API', () => {
+    beforeEach(() => {
+      jest.spyOn(mockStore, 'bills');
+      Object.defineProperty(window, 'localStorage', {
+        value: localStorageMock,
+      });
+      window.localStorage.setItem(
+        'user',
+        JSON.stringify({
+          type: 'Admin',
+          email: 'a@a',
+        })
+      );
+
+      it('should fetch and fail with 404 error', async () => {
+        mockStore.bills.mockImplementationOnce(() => {
+          return {
+            list: () => {
+              return Promise.reject(new Error('Erreur 404'));
+            },
+          };
+        });
+        const html = BillsUI({ error: 'Error 404' });
+        document.body.html = html;
+        const message = await screen.getByText(/Erreur 404/);
+        expect(message).toBeTruthy();
+      });
+
+      it('should fetch and fail with 500 error'),
+        async () => {
+          mockStore.bills.mockImplementationOnce(() => {
+            return {
+              list: () => {
+                return Promise.reject(new Error('Erreur 500'));
+              },
+            };
+          });
+          const html = BillsUI({ error: 'Erreur 500' });
+          document.body.innerHTML = html;
+          const message = await screen.getByText(/Erreur 500/);
+          expect(message).toBeTruthy();
+        };
+    });
+  });
+});
