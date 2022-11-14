@@ -42,7 +42,7 @@ describe('Given I am connected as an employee', () => {
       });
       const formNewBill = screen.getByTestId('form-new-bill');
       expect(formNewBill).toBeTruthy();
-      const handleSubmit = jest.fn((e) => newBill_test.handleSubmit(e));
+      const handleSubmit = jest.fn(newBill_test.handleSubmit);
       formNewBill.addEventListener('submit', handleSubmit);
       fireEvent.submit(formNewBill);
       expect(handleSubmit).toHaveBeenCalled();
