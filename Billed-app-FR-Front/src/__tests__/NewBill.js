@@ -7,6 +7,7 @@ import NewBillUI from '../views/NewBillUI.js';
 import BillsUI from '../views/BillsUI.js';
 import NewBill from '../containers/NewBill.js';
 import mockStore from '../__mocks__/store';
+jest.mock('../app/store', () => mockStore);
 import { ROUTES, ROUTES_PATH } from '../constants/routes';
 import { localStorageMock } from '../__mocks__/localStorage.js';
 import Store from '../app/Store';
@@ -31,7 +32,7 @@ describe('Given I am connected as an employee', () => {
         hash: ROUTES_PATH['NewBill'],
       },
     });
-    it.only('should submit with success', () => {
+    it('should submit with success', () => {
       const html = NewBillUI();
       document.body.innerHTML = html;
       const newBill_test = new NewBill({
