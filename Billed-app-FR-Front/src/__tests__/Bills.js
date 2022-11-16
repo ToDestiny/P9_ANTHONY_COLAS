@@ -19,30 +19,30 @@ jest.mock('../app/store', () => {
 });
 
 describe('Given I am connected as an employee', () => {
+  beforeEach(() => {
+    Object.defineProperty(window, 'localStorage', {
+      value: localStorageMock,
+    });
+    window.localStorage.setItem(
+      'user',
+      JSON.stringify({
+        type: 'Employee',
+      })
+    );
+    const root = document.createElement('div');
+    root.setAttribute('id', 'root');
+    document.body.append(root);
+    router();
+  });
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
   describe('When I am on Bills Page', () => {
     test('Then bill icon in vertical layout should be highlighted', async () => {
-      Object.defineProperty(window, 'localStorage', {
-        value: localStorageMock,
-        enumerable: true,
-        configurable: true,
-        writable: true,
-      });
-      window.localStorage.setItem(
-        'user',
-        JSON.stringify({
-          type: 'Employee',
-        })
-      );
-      const root = document.createElement('div');
-      root.setAttribute('id', 'root');
-      document.body.append(root);
-      router();
       window.onNavigate(ROUTES_PATH.Bills);
       await waitFor(() => screen.getByTestId('icon-window'));
       const windowIcon = screen.getByTestId('icon-window');
-      console.log(windowIcon);
-      //to-do write expect expression
-      expect(windowIcon.classList.contains('active-icon').toBe(true));
+      expect(windowIcon.classList.contains('active-icon')).toBe(true);
     });
     test('Then bills should be ordered from earliest to latest', () => {
       document.body.innerHTML = BillsUI({ data: bills });

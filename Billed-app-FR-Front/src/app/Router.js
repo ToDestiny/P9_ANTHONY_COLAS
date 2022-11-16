@@ -34,7 +34,7 @@ export default () => {
       const bills = new Bills({ document, onNavigate, store, localStorage });
       bills
         .getBills()
-        .then((data) => {
+        ?.then((data) => {
           rootDiv.innerHTML = BillsUI({ data });
           const divIcon1 = document.getElementById('layout-icon1');
           const divIcon2 = document.getElementById('layout-icon2');
@@ -63,7 +63,7 @@ export default () => {
       });
       bills
         .getBillsAllUsers()
-        .then((bills) => {
+        ?.then((bills) => {
           rootDiv.innerHTML = DashboardUI({ data: { bills } });
           new Dashboard({ document, onNavigate, store, bills, localStorage });
         })
@@ -99,7 +99,7 @@ export default () => {
       const bills = new Bills({ document, onNavigate, store, localStorage });
       bills
         .getBills()
-        .then((data) => {
+        ?.then((data) => {
           rootDiv.innerHTML = BillsUI({ data });
           const divIcon1 = document.getElementById('layout-icon1');
           const divIcon2 = document.getElementById('layout-icon2');
@@ -134,7 +134,7 @@ export default () => {
       });
       bills
         .getBillsAllUsers()
-        .then((bills) => {
+        ?.then((bills) => {
           rootDiv.innerHTML = DashboardUI({ data: { bills } });
           new Dashboard({ document, onNavigate, store, bills, localStorage });
         })
